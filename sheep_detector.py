@@ -19,7 +19,7 @@ if uploaded_file is not None:
     image_np = np.array(image)
 
     st.subheader("元画像")
-    st.image(image_np, use_container_width=True)
+    st.image(image_np, use_column_width=True)
 
     # YOLOv8で物体検出
     results = model.predict(image_np)
@@ -28,7 +28,7 @@ if uploaded_file is not None:
     # 検出結果画像を表示（バウンディングボックス付き）
     result_img = results[0].plot()
     st.subheader("検出結果")
-    st.image(result_img, use_container_width=True)
+    st.image(result_img, use_column_width=True)
 
     # 検出結果のテーブル表示（バウンディングボックス含む）
     if boxes is not None and len(boxes.cls) > 0:
