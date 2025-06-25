@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st 
 import cv2
 import numpy as np
 import pandas as pd
@@ -43,8 +43,8 @@ if uploaded_file is not None:
                 x1, y1, x2, y2 = map(int, xyxy[i])
                 width = x2 - x1
                 height = y2 - y1
-                label = f"{sheep_count}: sheep"
-                color = (0, 255, 0)  # 緑
+                label = str(sheep_count)  # 通し番号のみ表示
+                color = (0, 0, 0)  # 黒に変更
                 cv2.rectangle(annotated_img, (x1, y1), (x2, y2), color, 2)
                 cv2.putText(annotated_img, label, (x1, y1 - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
@@ -60,7 +60,7 @@ if uploaded_file is not None:
                 })
 
         if sheep_count > 0:
-            st.subheader("検出結果（sheep のみ通し番号付き）")
+            st.subheader("検出結果（通し番号のみ表示）")
             st.image(annotated_img, use_container_width=True)
 
             df = pd.DataFrame(rows)
