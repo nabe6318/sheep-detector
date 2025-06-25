@@ -45,3 +45,24 @@ if uploaded_file is not None:
         st.write(class_names)
     else:
         st.warning("⚠️ 物体が検出されませんでした。")
+
+        # 検出詳細を表形式で表示
+        xyxy = boxes.xyxy.cpu().numpy()  # [x1, y1, x2, y2]
+        conf = boxes.conf.cpu().numpy()  # confidence
+        class_ids = boxes.cls.cpu().numpy().astype(int)
+        class_names = [model.names[cid] for cid in class_ids]
+
+        # 表データの作成
+        rows = []
+        for i in range(len(class_ids)):
+            rows.append({
+                "クラス": class_names[i],
+                "信頼度": round(float(conf[i]), 3),
+                "X1": int(xyxy[i][0]),
+                "Y1": int(xyxy[i][1]),
+                "X2": int(xyxy[i][2]),
+                "Y2": int(xyxy[i][3]),
+            })
+
+        st.subheader("検出結果テーブル")
+        st.dataframe(rows, use_container_width=True)
