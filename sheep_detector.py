@@ -4,10 +4,10 @@ import pandas as pd
 from PIL import Image
 from ultralytics import YOLO
 
-model = YOLO("yolov8n.pt")
+model = YOLO("yolov11n.pt")
 
 st.set_page_config(page_title="羊検出アプリ", layout="centered")
-st.title("🐏 羊検出アプリ（YOLOv8 + Streamlit）")
+st.title("🐏 羊検出アプリ（YOLOv11 + Streamlit）")
 
 uploaded_file = st.file_uploader("画像をアップロードしてください（JPEG/PNG）", type=["jpg", "jpeg", "png"])
 
