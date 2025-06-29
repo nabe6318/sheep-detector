@@ -11,6 +11,10 @@ model = YOLO("yolov8n.pt")
 st.set_page_config(page_title="羊検出アプリ", layout="centered")
 st.title("🐏 羊検出アプリ（YOLOv8 + Streamlit）")
 
+# スライダーでしきい値を設定
+conf_threshold = st.slider("信頼度しきい値（conf）", 0.0, 1.0, 0.4, 0.05)
+iou_threshold = st.slider("IoUしきい値（iou）", 0.0, 1.0, 0.5, 0.05)
+
 uploaded_file = st.file_uploader("画像をアップロードしてください（JPEG/PNG）", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
@@ -21,8 +25,8 @@ if uploaded_file is not None:
     st.subheader("元画像")
     st.image(image_np, use_container_width=True)
 
-    # YOLOv8で物体検出
-    results = model.predict(image_np)
+    # YOLOv8で物体検出（しきい値を反映）
+    results = model.predict(image_np, conf=conf_threshold, iou=iou_threshold)
     boxes = results[0].boxes
 
     if boxes is not None and len(boxes.cls) > 0:
